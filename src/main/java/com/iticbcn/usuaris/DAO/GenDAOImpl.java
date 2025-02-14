@@ -2,7 +2,6 @@ package com.iticbcn.usuaris.DAO;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import org.hibernate.HibernateException;
 import org.hibernate.JDBCException;
@@ -13,15 +12,19 @@ import org.hibernate.query.Query;
 
 import jakarta.validation.ConstraintViolationException;
 
-public abstract class AbsDAO<T> implements IDAO<T> {
+public abstract class GenDAOImpl<T> implements GenDAO<T> {
 
     private SessionFactory sessionFactory;
     private Class<T> classe;
 
 
-    public AbsDAO(SessionFactory sessionFactory, Class<T> classe) {
+    public GenDAOImpl(SessionFactory sessionFactory, Class<T> classe) {
         this.sessionFactory = sessionFactory;
         this.classe = classe;
+    }
+
+    protected SessionFactory getSessionFactory() {
+        return sessionFactory;
     }
 
     @Override
@@ -50,7 +53,7 @@ public abstract class AbsDAO<T> implements IDAO<T> {
     }
 
     @Override
-    public Optional<T> get(int id) throws Exception {
+    public T get(int id) throws Exception {
         T entity = null;
     
         try (Session ses = sessionFactory.openSession()) {
@@ -71,7 +74,7 @@ public abstract class AbsDAO<T> implements IDAO<T> {
             throw hbex;
         }
     
-        return Optional.ofNullable(entity);
+        return entity;
     }
     
     @Override

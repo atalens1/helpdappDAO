@@ -9,9 +9,7 @@ import org.hibernate.query.Query;
 
 import com.iticbcn.usuaris.Model.*;
 
-public class UsuariDAO extends AbsDAO<Usuari>{
-
-    private SessionFactory sessionFactory;
+public class UsuariDAO extends GenDAOImpl<Usuari>{
 
     public UsuariDAO(SessionFactory sessionFactory) {
         super(sessionFactory,Usuari.class);
@@ -21,7 +19,7 @@ public class UsuariDAO extends AbsDAO<Usuari>{
 
         Usuari usuari = null;
 
-        try (Session ses = sessionFactory.openSession()) {
+        try (Session ses = super.getSessionFactory().openSession()) {
             try {
                 Query<Usuari> query = ses.createQuery("FROM Usuari WHERE dniUsuari = :dni", Usuari.class);
                 query.setParameter("dni", dni);

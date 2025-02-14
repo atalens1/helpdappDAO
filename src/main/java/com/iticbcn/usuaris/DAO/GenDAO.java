@@ -1,11 +1,10 @@
 package com.iticbcn.usuaris.DAO;
 
 import java.util.List;
-import java.util.Optional;
 
-public interface IDAO<T> {
+public interface GenDAO<T> {
 
-    Optional<T> get(int id) throws Exception;
+    T get(int id) throws Exception;
     
     List<T> getAll() throws Exception;
     

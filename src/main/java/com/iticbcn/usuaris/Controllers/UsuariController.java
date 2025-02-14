@@ -25,7 +25,7 @@ public class UsuariController {
         if (u == null) {
             u = InputView.DemanarDadesUsuari(bf, dni);
             try {
-                udao.PersistirUsuari(u);
+                udao.save(u);
                 System.out.println("Usuari creat amb èxit");
             } catch (Exception e) {
                 System.err.println("Error al crear l'usuari: " + e.getMessage());
@@ -39,7 +39,7 @@ public class UsuariController {
     public static List<Usuari> LlistarUsuaris(SessionFactory sf) throws Exception {
 
         UsuariDAO udao = new UsuariDAO(sf);
-        return udao.LlistarUsuaris();
+        return udao.getAll();
     }
     
 }

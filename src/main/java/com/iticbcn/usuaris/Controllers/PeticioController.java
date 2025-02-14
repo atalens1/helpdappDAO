@@ -94,7 +94,7 @@ public class PeticioController {
     
         while (p == null) {  // Repetir fins que s'obtingui una petició vàlida
             idPeticio = InputView.DemanarIdPeticio(bf);
-            p = petdao.ObtenirPeticio(idPeticio);
+            p = petdao.get(idPeticio);
         }
             
         String entrada = InputView.DemanarAccioModificarPeticio(bf);
@@ -103,7 +103,7 @@ public class PeticioController {
             System.out.print("Indiqueu el nou estat (Tancada) o (En progrés): ");
             p.setEstatPeticio(InputView.LecturaEntrada(bf));
             try {
-                petdao.ModificarPeticio(p);
+                petdao.update(p);
                 System.out.println("Estat de petició modificat correctament");
             } catch (Exception e) {
                 System.err.println("Error al modificar la petició" + e.getMessage());
@@ -120,7 +120,7 @@ public class PeticioController {
                     usuari = InputView.DemanarDadesUsuari(bf, dni);
                 /*cal persistir l'usuari per separat, el mètode merge de petició no ho farà */
                     try {
-                        udao.PersistirUsuari(usuari);
+                        udao.save(usuari);
                         System.out.println("usuari persistit correctament");
                     } catch (Exception e) {
                         System.err.println("Error afegint usuaris: " + e.getMessage());
@@ -151,7 +151,7 @@ public class PeticioController {
                     p.setUsuaris(uset);
                 //Modifiquem petició
                 try {
-                    petdao.ModificarPeticio(p);
+                    petdao.update(p);
                     System.out.println("Usuaris afegits correctament");
                 } catch (Exception e) {
                     System.err.println("Error afegint usuaris a la petició" + e.getMessage());
@@ -171,14 +171,14 @@ public class PeticioController {
 
         while (p == null) {  // Repetir fins que s'obtingui una petició vàlida
             idPeticio = InputView.DemanarIdPeticio(bf);
-            p = petdao.ObtenirPeticio(idPeticio);
+            p = petdao.get(idPeticio);
         }
 
         String entrada = InputView.ConfirmacioEsborrament(bf, p.getDescPeticio()); 
 
         if (entrada.equalsIgnoreCase("s")) {
             try {
-                petdao.EsborrarPeticio(p);
+                petdao.delete(p);
                 System.out.println("Petició esborrada correctament");
             } catch (Exception e) {
                 System.err.println("Error esborrant petició: "+e.getMessage());
